@@ -3,7 +3,7 @@ import streamlit as st
 import numpy as np
 import matplotlib as plt
 
-data2 = pd.read_csv("/Users/noa/Desktop/Capstone Code/healthcare-dataset-stroke-data.csv")
+data2 = pd.read_csv("healthcare-dataset-stroke-data.csv")
 chart = data2["bmi"].dropna()
 #chart.hist(bins = 10)
 #st.set_option('deprecation.showPyplotGlobalUse', False)
@@ -11,7 +11,7 @@ chart = data2["bmi"].dropna()
 
 @st.cache()
 def load_data():
-    data = pd.read_csv("/Users/noa/Desktop/Capstone Code/healthcare-dataset-stroke-data.csv")
+    data = pd.read_csv("healthcare-dataset-stroke-data.csv")
     return data.dropna()
 
 
