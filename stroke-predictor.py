@@ -152,6 +152,7 @@ if uploaded_data is not None:
 
     new_customers = pd.read_csv(uploaded_data, on_bad_lines='skip', encoding='ISO-8859-1')
     new_customers = pd.get_dummies(new_customers, drop_first=True)
+    new_customers = sm.add_constant(new_customers)
 
     new_customers["Stroke_prediction"] = model.predict(new_customers)
 
