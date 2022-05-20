@@ -155,6 +155,7 @@ if uploaded_data is not None:
     new_customers = sm.add_constant(new_customers)
 
     new_customers["Stroke_prediction"] = model.predict(new_customers)
+    new_customers["Stroke_prediction"] = (new_customers["Stroke_prediction"] > 0.08).astype(int)
 
     st.write(new_customers)
 
