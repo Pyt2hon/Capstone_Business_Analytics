@@ -167,4 +167,4 @@ if uploaded_data is not None:
 
     for i in range(0, new_customers.shape[0]):
         if st.checkbox(f"Show more information about new client {i}", False):
-            st.write(new_customers.iloc[i, 17])
+            st.write(new_customers.iloc[i, 18])
