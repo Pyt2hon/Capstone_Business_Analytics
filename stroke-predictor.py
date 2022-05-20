@@ -165,7 +165,6 @@ if uploaded_data is not None:
                    data=new_customers.to_csv(index=False).encode("utf-8"),
                    file_name="scored_customer_data.csv")
 
-    if st.checkbox("Show more information", False):
-        for i in range(0, new_customers.shape[0]):
-            st.subheader(f"Raw Data about new client {i}")
+    for i in range(0, new_customers.shape[0]):
+        if st.checkbox("Show more information about new client {i}", False):
             st.write("info")
