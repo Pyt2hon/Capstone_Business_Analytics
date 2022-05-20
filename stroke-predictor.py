@@ -150,7 +150,7 @@ model = load_model()
 
 if uploaded_data is not None:
 
-    new_customers = pd.read_csv(uploaded_data)
+    new_customers = pd.read_csv(uploaded_data, sep=',', encoding='latin-1')
     new_customers = pd.get_dummies(new_customers, drop_first=True)
 
     new_customers["Stroke_prediction"] = model.predict(new_customers)
@@ -159,7 +159,6 @@ if uploaded_data is not None:
 
     st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape)
 
-
-    st.download_button(label = "Download scored customer data",
-                   data = new_customers.to_csv(index=False).encode("ISO-8859-1"),
-                   file_name = "scored_customer_data.csv")
+    st.download_button(label="Download scored customer data",
+                   data=new_customers.to_csv(index=False).encode("utf-8"),
+                   file_name="scored_customer_data.csv")
