@@ -155,6 +155,7 @@ if uploaded_data is not None:
     new_customers = sm.add_constant(new_customers)
 
     new_customers["Stroke_prediction"] = model.predict(new_customers)
+    new_customers["Stroke_prediction_exact"] = model.predict(new_customers)
     new_customers["Stroke_prediction"] = (new_customers["Stroke_prediction"] > 0.08).astype(int)
 
     st.write(new_customers)
@@ -167,4 +168,4 @@ if uploaded_data is not None:
 
     for i in range(0, new_customers.shape[0]):
         if st.checkbox(f"Show more information about new client {i}", False):
-            st.write(new_customers.iloc[i, 17])
+            st.write(new_customers.iloc[i, 18])
