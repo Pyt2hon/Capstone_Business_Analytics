@@ -166,5 +166,5 @@ if uploaded_data is not None:
                    file_name="scored_customer_data.csv")
 
     for i in range(0, new_customers.shape[0]):
-        if st.checkbox("Show more information about new client {i}", False):
+        if st.checkbox(f"Show more information about new client {i}", False):
             st.write("info")
