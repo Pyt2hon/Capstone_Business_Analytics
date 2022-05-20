@@ -164,3 +164,7 @@ if uploaded_data is not None:
     st.download_button(label="Download scored customer data",
                    data=new_customers.to_csv(index=False).encode("utf-8"),
                    file_name="scored_customer_data.csv")
+
+    if st.checkbox("Show more information", False):
+        st.subheader("Raw Data")
+        st.write(new_customers.hist())
