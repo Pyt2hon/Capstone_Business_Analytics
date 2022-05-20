@@ -1,3 +1,4 @@
+
 # Import all necessary libraries
 import pandas as pd
 import streamlit as st
@@ -139,7 +140,7 @@ uploaded_data = st.file_uploader("Choose a file with Customer Data for predictin
 
 @st.cache(allow_output_mutation=True)
 def load_model():
-    filename = "Part1_finished.ipynb"
+    filename = "stroke_model.sav"
     loaded_model = pickle.load(open(filename, "rb"))
     return loaded_model
 
@@ -147,10 +148,14 @@ def load_model():
 model = load_model()
 
 if uploaded_data is not None:
+
     new_customers = pd.read_csv(uploaded_data)
-    st.write(new_customers)
     new_customers = pd.get_dummies(new_customers, drop_first=True)
+
     new_customers["Stroke_prediction"] = model.predict(new_customers)
+
+    st.write(new_customers)
+
     st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape)
 
 
