@@ -3,6 +3,7 @@
 import pandas as pd
 import streamlit as st
 import pickle
+import statsmodels.api as sm
 import numpy as np
 import matplotlib as plt
 
@@ -159,6 +160,6 @@ if uploaded_data is not None:
     st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape)
 
 
-st.download_button(label = "Download scored customer data",
+    st.download_button(label = "Download scored customer data",
                    data = new_customers.to_csv(index=False).encode("utf-8"),
                    file_name = "scored:customer_data.csv")
