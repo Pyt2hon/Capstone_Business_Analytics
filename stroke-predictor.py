@@ -158,7 +158,7 @@ if uploaded_data is not None:
 
     st.write(new_customers)
 
-    st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape)
+    st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape[0])
 
     st.download_button(label="Download scored customer data",
                    data=new_customers.to_csv(index=False).encode("utf-8"),
