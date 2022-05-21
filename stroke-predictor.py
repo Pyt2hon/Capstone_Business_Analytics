@@ -135,8 +135,6 @@ Smoking_status = row5_col2.radio("Enter your smoking status:",
                                   options=['Never smoked', 'Formerly smoked', 'Smokes', 'Unknown'])
 row5_col2.write(Smoking_status)  # Show the user the entered input
 
-st.write(f'The prediction for a stroke for the entered data is:')
-
 if Gender == "Male":
     v1, v2, v3 = -0.0019, 0, 0
 
@@ -200,22 +198,22 @@ if Smoking_status == "Unknown":
 Stroke_probability = -0.0931 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10 + v11 + v12 + v13 + v14 + v15 + v16
 
 if Stroke_probability >= 0.08:
-    Stroke_statement = 1
+    Stroke_statement = "Stroke"
 
 else:
-    Stroke_statement = 0
+    Stroke_statement = "No stroke"
 
-st.write(Stroke_statement)
+st.write(st.write(f'The prediction for a stroke for the entered data is: {Stroke_statement}'))
 
 if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
 
     if percentile > 90:
         statement = "very high"
-        
+
     elif percentile > 75:
         statement = "high"
-    
+
     elif percentile > 50:
         statement = "medium"
 
