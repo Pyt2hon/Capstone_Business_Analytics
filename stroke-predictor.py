@@ -191,5 +191,5 @@ if uploaded_data is not None:
                 statement = "low"
             else:
                 st.write("An error has occurred")
-            st.write(f"With a value of {round(new_customers.iloc[i, 18]),2} client {i} ranks in the {percentile}. percentile!"
+            st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile}. percentile!"
                      f"That means customer {i} is in a {statement} risk segment")
