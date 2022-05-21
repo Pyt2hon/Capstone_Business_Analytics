@@ -32,6 +32,15 @@ def load_data2():
     return data2.dropna()
 
 
+@st.cache(allow_output_mutation=True)
+def load_model():
+    filename = "stroke_model.sav"
+    loaded_model = pickle.load(open(filename, "rb"))
+    return loaded_model
+
+
+model = load_model()
+
 # Save it in the variable Stroke_data_distribution
 Stroke_data_distribution = load_data2()
 
@@ -84,7 +93,7 @@ row2_col1.write(Hypertension)  # Show the user the entered input
 
 # Display a radio widget for the user to enter the heart disease state
 Heart_disease = row2_col2.radio(
-    "Have you ever suffered from a heart disease?",
+    "Do you suffer from a heart disease?",
     options=['Yes', 'No'])
 row2_col2.write(Heart_disease)  # Show the user the entered input
 
@@ -124,42 +133,32 @@ Smoking_status = row5_col2.radio("Enter your smoking status:",
                                   options=['Never smoked', 'Formerly smoked', 'Smokes', 'Unknown'])
 row5_col2.write(Smoking_status)  # Show the user the entered input
 
-
-
-st.write(f'Your probability for a stroke is:')
+st.write(f'The prediction for a stroke for the entered data is:')
 
 # Adds a checkbox
 if st.checkbox("Show filtered data", False):
     st.subheader("Raw Data")
     st.write(Stroke_data)
 
+manual_data = [Gender, Age, Hypertension, Gender, Heart_disease, Marriage_status, Work_type]
+manual_data.extend([Residence_type, Glucose_level, BMI, Smoking_status])
+manual_data_cols = ["Gender", "Age", "Hypertension", "Gender", "Heart_disease", "Marriage_status", "Work_type"]
+manual_data_cols.extend(["Residence_type", "Glucose_level", "BMI", "Smoking_status"])
+stroke_proba = model.predict(pd.DataFrame(manual_data, columns = manual_data_cols))
 
+if st.checkbox(f"Show more information about new client {i}", False):
+    percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], stroke_proba), 1)
+    if percentile > 75:
+        statement = "high"
+    elif percentile > 50:
+        statement = "medium"
+    elif percentile < 50:
+        statement = "low"
+    else:
+        st.write("An error has occurred")
 
-#st.sidebar.write("costumer-trial-run")
-#st.sidebar.button("Click here to run a costumer-trial-run")
-
-#add_selectbox = st.sidebar.selectbox(
-#    "How would you like to be contacted?",
-#    ("Email", "Home phone", "Mobile phone")
-#)
-
-#with st.sidebar:
-#    add_radio = st.radio(
-#        "Choose a shipping method",
-#        ("Standard (5-15 days)", "Express (2-5 days)")
-#    )
 
 uploaded_data = st.file_uploader("Choose a file with Customer Data for predicting Stroke")
-
-
-@st.cache(allow_output_mutation=True)
-def load_model():
-    filename = "stroke_model.sav"
-    loaded_model = pickle.load(open(filename, "rb"))
-    return loaded_model
-
-
-model = load_model()
 
 if uploaded_data is not None:
 
