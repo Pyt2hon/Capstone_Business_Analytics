@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 import pickle
 import statsmodels.api as sm
+from scipy import stats
 import numpy as np
 import matplotlib as plt
 
@@ -23,6 +24,18 @@ def load_data():
 
 # Save it in the variable Stroke_data
 Stroke_data = load_data()
+
+# Implement Function that loads in the healthcare dataset
+@st.cache()
+def load_data2():
+    data2 = pd.read_csv("Stroke_Distribution")
+    return data2.dropna()
+
+
+# Save it in the variable Stroke_data_distribution
+Stroke_data_distribution = load_data2()
+
+Stroke_X = Stroke_data.drop("stroke", axis = 1)
 
 
 # Set the website title to "Stroke Risk Predictor" using streamlit
@@ -167,5 +180,15 @@ if uploaded_data is not None:
                    file_name="scored_customer_data.csv")
 
     for i in range(0, new_customers.shape[0]):
-        if st.checkbox(f"Show more information about new client {i}", False):
-            st.write(new_customers.iloc[i, 18])
+        if st.checkbox(f"Show more information about new client {i+1}", False):
+            percentile = stats.percentileofscore(Stroke_data_distribution, new_customers.iloc[i+1, 17])
+            if percentile > 75:
+                statement = "high"
+            elif percentile > 50:
+                statement = "medium"
+            elif percentile < 50:
+                statement = "low"
+            else:
+                st.write("An error has occurred")
+            st.write(f"With a value of {new_customers.iloc[i, 17]} client {i+1} ranks in the {percentile}. percentile!"
+                     f"That means customer {i+1} is in a {statement} risk segment")
