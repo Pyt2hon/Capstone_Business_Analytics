@@ -137,11 +137,6 @@ row5_col2.write(Smoking_status)  # Show the user the entered input
 
 st.write(f'The prediction for a stroke for the entered data is:')
 
-# Adds a checkbox
-if st.checkbox("Show filtered data", False):
-    st.subheader("Raw Data")
-    st.write(Stroke_data)
-
 if Gender == "Male":
     v1, v2, v3 = -0.0019, 0, 0
 
@@ -215,9 +210,12 @@ st.write(Stroke_statement)
 if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
 
-    if percentile > 75:
+    if percentile > 90:
+        statement2 = "very high"
+        
+    elif percentile > 75:
         statement = "high"
-
+    
     elif percentile > 50:
         statement = "medium"
 
@@ -229,6 +227,11 @@ if st.checkbox(f"Show more information about client", False):
 
     st.write(f"With a value of {round(Stroke_probability, 2)} client ranks in the {percentile}."
              f"percentile. That means customer is in a {statement} risk segment!")
+
+# Adds a checkbox
+if st.checkbox("Show filtered data", False):
+    st.subheader("Raw Data")
+    st.write(Stroke_data)
 
 uploaded_data = st.file_uploader("Choose a file with Customer Data for predicting Stroke")
 
@@ -253,7 +256,9 @@ if uploaded_data is not None:
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
             percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
-            if percentile2 > 75:
+            if percentile2 > 90:
+                statement2 = "very high"
+            elif percentile2 > 70:
                 statement2 = "high"
             elif percentile2 > 50:
                 statement2 = "medium"
