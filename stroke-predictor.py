@@ -146,6 +146,7 @@ manual_data = [manual_data]
 manual_data_cols = ["Gender", "Age", "Hypertension", "Gender", "Heart_disease", "Marriage_status", "Work_type"]
 manual_data_cols.extend(["Residence_type", "Glucose_level", "BMI", "Smoking_status"])
 manual_data_df = pd.DataFrame(manual_data)
+manual_data_df = pd.get_dummies(manual_data_df, drop_first=True)
 st.write(manual_data_df)
 stroke_proba = model.predict(manual_data_df)
 
