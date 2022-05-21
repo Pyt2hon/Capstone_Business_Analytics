@@ -212,7 +212,7 @@ else:
 
 st.write(Stroke_statement)
 
-if st.checkbox(f"Show more information about new client {i}", False):
+if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
 
     if percentile > 75:
