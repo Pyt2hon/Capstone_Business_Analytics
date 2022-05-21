@@ -34,6 +34,7 @@ def load_data2():
 
 # Save it in the variable Stroke_data_distribution
 Stroke_data_distribution = load_data2()
+Stroke_data_distribution = Stroke_data_distribution.drop('Unnamed: 0', axis = 1)
 
 Stroke_X = Stroke_data.drop("stroke", axis = 1)
 
@@ -181,6 +182,7 @@ if uploaded_data is not None:
 
     for i in range(0, new_customers.shape[0]):
         if st.checkbox(f"Show more information about new client {i+1}", False):
+
             percentile = stats.percentileofscore(Stroke_data_distribution, new_customers.iloc[i+1, 18])
             if percentile > 75:
                 statement = "high"
