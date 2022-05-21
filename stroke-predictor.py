@@ -28,7 +28,7 @@ Stroke_data = load_data()
 # Implement Function that loads in the healthcare dataset
 @st.cache()
 def load_data2():
-    data2 = pd.read_csv("Stroke_Distribution")
+    data2 = pd.read_csv("Stroke_Distribution.csv")
     return data2.dropna()
 
 
