@@ -198,10 +198,10 @@ if Smoking_status == "Unknown":
 Stroke_probability = -0.0931 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10 + v11 + v12 + v13 + v14 + v15 + v16
 
 if Stroke_probability >= 0.08:
-    Stroke_statement = "Stroke"
+    Stroke_statement = "Stroke!"
 
 else:
-    Stroke_statement = "No stroke"
+    Stroke_statement = "No stroke!"
 
 st.write(st.write(f'The prediction for a stroke for the entered data is: {Stroke_statement}'))
 
@@ -209,10 +209,10 @@ if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
 
     if percentile > 90:
-        statement = "very high"
+        statement = "high"
 
     elif percentile > 75:
-        statement = "high"
+        statement = "medium-high"
 
     elif percentile > 50:
         statement = "medium"
@@ -255,13 +255,13 @@ if uploaded_data is not None:
         if st.checkbox(f"Show more information about new client {i}", False):
             percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
             if percentile2 > 90:
-                statement2 = "very high"
-            elif percentile2 > 70:
                 statement2 = "high"
+            elif percentile2 > 70:
+                statement2 = "medium-high"
             elif percentile2 > 50:
                 statement2 = "medium"
             elif percentile2 < 50:
-                statement2 = "low"
+                statement2 = "very low"
             else:
                 st.write("An error has occurred")
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
