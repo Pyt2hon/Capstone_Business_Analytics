@@ -28,7 +28,7 @@ Stroke_data = load_data()
 # Implement Function that loads in the healthcare dataset
 @st.cache()
 def load_data2():
-    data2 = pd.read_csv("Stroke_Distribution_2.csv")
+    data2 = pd.read_csv("Y_distribution.csv")
     return data2.dropna()
 
 
@@ -181,7 +181,7 @@ if uploaded_data is not None:
 
     for i in range(0, new_customers.shape[0]):
         if st.checkbox(f"Show more information about new client {i+1}", False):
-            percentile = stats.percentileofscore((Stroke_data_distribution["di"]-1), new_customers.iloc[i+1, 18])
+            percentile = stats.percentileofscore((Stroke_data_distribution["Di"]), new_customers.iloc[i+1, 18])
             if percentile > 75:
                 statement = "high"
             elif percentile > 50:
