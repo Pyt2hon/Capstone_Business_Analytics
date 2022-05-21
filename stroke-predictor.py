@@ -25,11 +25,16 @@ def load_data():
 # Save it in the variable Stroke_data
 Stroke_data = load_data()
 
+
 # Implement function that loads in the healthcare dataset
 @st.cache()
 def load_data2():
     data2 = pd.read_csv("Y_distribution.csv")
     return data2.dropna()
+
+
+# Save it in the variable Stroke_data_distribution
+Stroke_data_distribution = load_data2()
 
 
 @st.cache(allow_output_mutation=True)
@@ -40,9 +45,6 @@ def load_model():
 
 
 model = load_model()
-
-# Save it in the variable Stroke_data_distribution
-Stroke_data_distribution = load_data2()
 
 Stroke_X = Stroke_data.drop("stroke", axis = 1)
 
@@ -140,27 +142,93 @@ if st.checkbox("Show filtered data", False):
     st.subheader("Raw Data")
     st.write(Stroke_data)
 
-manual_data = [Gender, Age, Hypertension, Gender, Heart_disease, Marriage_status, Work_type]
-manual_data.extend([Residence_type, Glucose_level, BMI, Smoking_status])
-manual_data = [manual_data]
-manual_data_cols = ["Gender", "Age", "Hypertension", "Gender", "Heart_disease", "Marriage_status", "Work_type"]
-manual_data_cols.extend(["Residence_type", "Glucose_level", "BMI", "Smoking_status"])
-manual_data_df = pd.DataFrame(manual_data)
-manual_data_df = pd.get_dummies(manual_data_df, drop_first=True)
-st.write(manual_data_df)
-stroke_proba = model.predict(manual_data_df)
+if Gender == "Male":
+    v1, v2, v3 = -0.0019, 0, 0
+
+if Gender == "Female":
+    v1, v2, v3 = 0, 0, 0
+
+if Gender == "Other":
+    v1, v2, v3 = -0, 0, -0.0225
+
+v4 = Age*0.0035
+
+if Hypertension == "Yes":
+    v5 = 0.0385
+
+if Hypertension == "No":
+    v5 = 0
+
+if Heart_disease == "Yes":
+    v6 = 0.0482
+
+if Heart_disease == "No":
+    v6 = 0
+
+if Work_type == "Never worked":
+    v7, v8, v9, v10 = 0.0339, 0, 0, 0
+
+if Work_type == "Private Sector":
+    v7, v8, v9, v10 = 0, 0.0124, 0, 0
+
+if Work_type == "Self-employed":
+    v7, v8, v9, v10 = 0, 0, -0.0173, 0
+
+if Work_type == "Child/ Student":
+    v7, v8, v9, v10 = 0, 0, 0, 0.0641
+
+if Work_type == "Government Job":
+    v7, v8, v9, v10 = 0, 0, 0, 0
+
+if Residence_type == "Urban":
+    v11 = 0.0101
+
+if Residence_type == "Rural":
+    v11 = 0
+
+v11 = Glucose_level*0.0002
+v12 = BMI*-0.0007
+
+if Smoking_status == 'Never smoked':
+    v13, v14, v15, v16 = -0.0105, 0, 0, 0
+
+if Smoking_status == "Formerly smoked":
+    v13, v14, v15, v16 = 0.0, -0.0029, 0, 0
+
+if Smoking_status == "Smokes":
+    v13, v14, v15, v16 = 0, 0, 0, -0.0060
+
+if Smoking_status == "Unknown":
+    v13, v14, v15, v16 = 0, 0, 0, 0
+
+
+Stroke_probability = -0.0931 + v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16
+
+if Stroke_probability >= 0.08:
+    Stroke_statement = 1
+
+else:
+    Stroke_statement = 0
+
+st.write(Stroke_statement)
 
 if st.checkbox(f"Show more information about new client {i}", False):
-    percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], stroke_proba), 1)
+    percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
+    
     if percentile > 75:
         statement = "high"
+    
     elif percentile > 50:
         statement = "medium"
+    
     elif percentile < 50:
         statement = "low"
+    
     else:
         st.write("An error has occurred")
-
+    
+    st.write(f"With a value of {round(Stroke_probability, 2)} client ranks in the {percentile}."
+             f"percentile. That means customer is in a {statement} risk segment!")
 
 uploaded_data = st.file_uploader("Choose a file with Customer Data for predicting Stroke")
 
@@ -184,14 +252,14 @@ if uploaded_data is not None:
 
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
-            percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
-            if percentile > 75:
-                statement = "high"
-            elif percentile > 50:
-                statement = "medium"
-            elif percentile < 50:
-                statement = "low"
+            percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
+            if percentile2 > 75:
+                statement2 = "high"
+            elif percentile2 > 50:
+                statement2 = "medium"
+            elif percentile2 < 50:
+                statement2 = "low"
             else:
                 st.write("An error has occurred")
-            st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile}."
-                     f"percentile. That means customer {i} is in a {statement} risk segment!")
+            st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
+                     f"percentile. That means customer {i} is in a {statement2} risk segment!")
