@@ -140,7 +140,7 @@ if st.checkbox("Show filtered data", False):
     st.subheader("Raw Data")
     st.write(Stroke_data)
 
-manual_data = [Gender, Age, Hypertension, Gender, Heart_disease, Marriage_status, Work_type]
+manual_data = [[Gender, Age, Hypertension, Gender, Heart_disease, Marriage_status, Work_type]]
 manual_data.extend([Residence_type, Glucose_level, BMI, Smoking_status])
 manual_data_cols = ["Gender", "Age", "Hypertension", "Gender", "Heart_disease", "Marriage_status", "Work_type"]
 manual_data_cols.extend(["Residence_type", "Glucose_level", "BMI", "Smoking_status"])
