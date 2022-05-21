@@ -181,7 +181,7 @@ if uploaded_data is not None:
 
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
-            percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),2)
+            percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
             st.write(percentile)
             if percentile > 75:
                 statement = "high"
@@ -191,5 +191,5 @@ if uploaded_data is not None:
                 statement = "low"
             else:
                 st.write("An error has occurred")
-            st.write(f"With a value of {new_customers.iloc[i, 18]} client {i} ranks in the {percentile}. percentile!"
+            st.write(f"With a value of {round(new_customers.iloc[i, 18]),2} client {i} ranks in the {percentile}. percentile!"
                      f"That means customer {i} is in a {statement} risk segment")
