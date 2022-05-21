@@ -180,8 +180,8 @@ if uploaded_data is not None:
                    file_name="scored_customer_data.csv")
 
     for i in range(0, new_customers.shape[0]):
-        if st.checkbox(f"Show more information about new client {i}", False):
-            percentile = stats.percentileofscore(Stroke_data_distribution, new_customers.iloc[1, 18])
+        if st.checkbox(f"Show more information about new client {i+1}", False):
+            percentile = stats.percentileofscore(int(Stroke_data_distribution), int(new_customers.iloc[i+1, 18]))
             if percentile > 75:
                 statement = "high"
             elif percentile > 50:
