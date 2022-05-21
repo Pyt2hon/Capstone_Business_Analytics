@@ -202,7 +202,7 @@ if Smoking_status == "Unknown":
     v13, v14, v15, v16 = 0, 0, 0, 0
 
 
-Stroke_probability = -0.0931 + v1, v2, v3, v4, v5, v6, v7, v8, v9, v10, v11, v12, v13, v14, v15, v16
+Stroke_probability = -0.0931 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10 + v11 + v12 + v13 + v14 + v15 + v16
 
 if Stroke_probability >= 0.08:
     Stroke_statement = 1
@@ -214,19 +214,19 @@ st.write(Stroke_statement)
 
 if st.checkbox(f"Show more information about new client {i}", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
-    
+
     if percentile > 75:
         statement = "high"
-    
+
     elif percentile > 50:
         statement = "medium"
-    
+
     elif percentile < 50:
         statement = "low"
-    
+
     else:
         st.write("An error has occurred")
-    
+
     st.write(f"With a value of {round(Stroke_probability, 2)} client ranks in the {percentile}."
              f"percentile. That means customer is in a {statement} risk segment!")
 
