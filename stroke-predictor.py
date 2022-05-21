@@ -198,10 +198,10 @@ if Smoking_status == "Unknown":
 Stroke_probability = -0.0931 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10 + v11 + v12 + v13 + v14 + v15 + v16
 
 if Stroke_probability >= 0.08:
-    Stroke_statement = "Stroke!"
+    Stroke_statement = "At risk!"
 
 else:
-    Stroke_statement = "No stroke!"
+    Stroke_statement = "Not at risk!"
 
 st.write(st.write(f'The prediction for a stroke for the entered data is: {Stroke_statement}'))
 
