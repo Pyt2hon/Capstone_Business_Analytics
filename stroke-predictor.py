@@ -203,7 +203,7 @@ if Stroke_probability >= 0.08:
 else:
     Stroke_statement = "Not at risk!"
 
-st.write(f'The prediction for a stroke for the entered data is: {Stroke_statement}')
+st.write(f'The prediction for the entered data is: {Stroke_statement}')
 
 if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
