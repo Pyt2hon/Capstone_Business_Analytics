@@ -25,6 +25,8 @@ def load_data():
 # Save it in the variable Stroke_data
 Stroke_data = load_data()
 
+# Drop the column stroke
+Stroke_X = Stroke_data.drop("stroke", axis = 1)
 
 # Implement function that loads in the healthcare dataset
 @st.cache()
@@ -37,6 +39,7 @@ def load_data2():
 Stroke_data_distribution = load_data2()
 
 
+# Implement function that loads in the model
 @st.cache(allow_output_mutation=True)
 def load_model():
     filename = "stroke_model.sav"
@@ -44,9 +47,8 @@ def load_model():
     return loaded_model
 
 
+# Save the model in the variable model
 model = load_model()
-
-Stroke_X = Stroke_data.drop("stroke", axis = 1)
 
 
 # Set the website title to "Stroke Risk Predictor" using streamlit
@@ -135,6 +137,8 @@ Smoking_status = row5_col2.radio("Enter your smoking status:",
                                   options=['Never smoked', 'Formerly smoked', 'Smokes', 'Unknown'])
 row5_col2.write(Smoking_status)  # Show the user the entered input
 
+# Implement all the parameters from the model for the customizable prediction
+# For the variable "Gender"
 if Gender == "Male":
     v1, v2, v3 = -0.0019, 0, 0
 
@@ -144,20 +148,24 @@ if Gender == "Female":
 if Gender == "Other":
     v1, v2, v3 = -0, 0, -0.0225
 
+# For the variable "Age"
 v4 = Age*0.0035
 
+# For the variable "Hypertension"
 if Hypertension == "Yes":
     v5 = 0.0385
 
 if Hypertension == "No":
     v5 = 0
 
+# For the variable "Heart_disease"
 if Heart_disease == "Yes":
     v6 = 0.0482
 
 if Heart_disease == "No":
     v6 = 0
 
+# For the variable "Work_type"
 if Work_type == "Never worked":
     v7, v8, v9, v10 = 0.0339, 0, 0, 0
 
@@ -173,15 +181,20 @@ if Work_type == "Child/ Student":
 if Work_type == "Government Job":
     v7, v8, v9, v10 = 0, 0, 0, 0
 
+# For the variable "Residence_type"
 if Residence_type == "Urban":
     v11 = 0.0101
 
 if Residence_type == "Rural":
     v11 = 0
 
+# For the variable "Glucose_level"
 v11 = Glucose_level*0.0002
+
+# For the variable "BMI"
 v12 = BMI*-0.0007
 
+# For the variable "Smoking_status"
 if Smoking_status == 'Never smoked':
     v13, v14, v15, v16 = -0.0105, 0, 0, 0
 
@@ -194,76 +207,95 @@ if Smoking_status == "Smokes":
 if Smoking_status == "Unknown":
     v13, v14, v15, v16 = 0, 0, 0, 0
 
-
+# Calculate the Stroke probability by adding the values and the constant of the OLS model
 Stroke_probability = -0.0931 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10 + v11 + v12 + v13 + v14 + v15 + v16
 
+# Set a threshold and create a statement
 if Stroke_probability >= 0.08:
     Stroke_statement = "At risk!"
 
+# Create a statement for low-risk-customers
 else:
     Stroke_statement = "Not at risk!"
 
+# Print the statement
 st.subheader(f'The prediction for the entered data is: {Stroke_statement}')
 
+# Add a checkbox that returns a statement considering their stroke value and the distribution of the stroke dataset
 if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
 
-    if percentile > 90:
+    if percentile > 90:  # Set the percentile threshold for high risk patients at 90
         statement = "high"
 
-    elif percentile > 75:
+    elif percentile > 75:  # Set the percentile threshold for medium-high risk patients at 75
         statement = "medium-high"
 
-    elif percentile > 50:
+    elif percentile > 50:  # Set the percentile threshold for medium risk patients at 50
         statement = "medium"
 
-    elif percentile < 50:
+    elif percentile < 50:  # Set the percentile threshold for low risk patients at below 50
         statement = "low"
 
     else:
         st.write("An error has occurred")
 
+    # Print a statement regarding the new information
     st.write(f"With a value of {round(Stroke_probability, 2)} client ranks in the {percentile}."
              f"percentile. That means customer is in a {statement} risk segment!")
 
-# Adds a checkbox
+# Add a checkbox
 if st.checkbox("Show filtered data", False):
     st.subheader("Raw Data")
     st.write(Stroke_data)
 
+# Give the option to upload data
 uploaded_data = st.file_uploader("Choose a file with Customer Data for predicting Stroke")
 
+# Create actions if data is uploaded
 if uploaded_data is not None:
-
+    
+    # Read in csv, get dummies and add a constant to predict values
     new_customers = pd.read_csv(uploaded_data, on_bad_lines='skip', encoding='ISO-8859-1')
     new_customers = pd.get_dummies(new_customers, drop_first=True)
     new_customers = sm.add_constant(new_customers)
-
+    
+    # Predict values and save the in a new column
     new_customers["Stroke_prediction"] = model.predict(new_customers)
-    new_customers["Stroke_prediction_exact"] = new_customers["Stroke_prediction"]
-    new_customers["Stroke_prediction"] = (new_customers["Stroke_prediction"] > 0.08).astype(int)
+    new_customers["Stroke_prediction_exact"] = new_customers["Stroke_prediction"]  # For exact values
+    new_customers["Stroke_prediction"] = (new_customers["Stroke_prediction"] > 0.08).astype(int)  # With threshold
 
+    # Print out the newly generated dataset
     st.write(new_customers)
-
+    
+    # Print success message
     st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape[0])
 
+    # Give the option to Download the scored customer data
     st.download_button(label="Download scored customer data",
                    data=new_customers.to_csv(index=False).encode("utf-8"),
                    file_name="scored_customer_data.csv")
-
+    
+    # Create a for loop to return a statement considering their stroke value and the distribution of the stroke dataset
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
             percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
-            if percentile2 > 90:
+            
+            if percentile2 > 90:  # Set the percentile threshold for high risk patients at 90
                 statement2 = "high"
-            elif percentile2 > 70:
+                
+            elif percentile2 > 70:  # Set the percentile threshold for medium-high risk patients at 70
                 statement2 = "medium-high"
-            elif percentile2 > 50:
+                
+            elif percentile2 > 50:  # Set the percentile threshold for medium risk patients at 50
                 statement2 = "medium"
-            elif percentile2 < 50:
-                statement2 = "very low"
+                
+            elif percentile2 < 50:  # Set the percentile threshold for low risk patients at below 50
+                statement2 = "low"
+                
             else:
                 st.write("An error has occurred")
+                
+            # Print a summarizing text
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
-
