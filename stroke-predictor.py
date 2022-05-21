@@ -144,7 +144,9 @@ manual_data = [[Gender, Age, Hypertension, Gender, Heart_disease, Marriage_statu
 manual_data.extend([Residence_type, Glucose_level, BMI, Smoking_status])
 manual_data_cols = ["Gender", "Age", "Hypertension", "Gender", "Heart_disease", "Marriage_status", "Work_type"]
 manual_data_cols.extend(["Residence_type", "Glucose_level", "BMI", "Smoking_status"])
-stroke_proba = model.predict(pd.DataFrame(manual_data, columns = manual_data_cols))
+manual_data_df = pd.DataFrame(manual_data, columns = manual_data_cols)
+st.write(manual_data_df)
+stroke_proba = model.predict(manual_data_df)
 
 if st.checkbox(f"Show more information about new client {i}", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], stroke_proba), 1)
