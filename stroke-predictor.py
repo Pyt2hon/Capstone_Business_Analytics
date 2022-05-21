@@ -211,7 +211,7 @@ if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
 
     if percentile > 90:
-        statement2 = "very high"
+        statement = "very high"
         
     elif percentile > 75:
         statement = "high"
