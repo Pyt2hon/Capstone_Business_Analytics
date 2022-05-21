@@ -15,7 +15,7 @@ import matplotlib as plt
 #st.pyplot(bins = 10)
 
 
-# Implement Function that loads in the healthcare dataset
+# Implement function that loads in the healthcare dataset
 @st.cache()
 def load_data():
     data = pd.read_csv("healthcare-dataset-stroke-data.csv")
@@ -25,7 +25,7 @@ def load_data():
 # Save it in the variable Stroke_data
 Stroke_data = load_data()
 
-# Implement Function that loads in the healthcare dataset
+# Implement function that loads in the healthcare dataset
 @st.cache()
 def load_data2():
     data2 = pd.read_csv("Y_distribution.csv")
@@ -179,9 +179,9 @@ if uploaded_data is not None:
                    data=new_customers.to_csv(index=False).encode("utf-8"),
                    file_name="scored_customer_data.csv")
 
-    for i in range(0, new_customers.shape[0]):
+    for i in range(0, (new_customers.shape[0]+1)):
         if st.checkbox(f"Show more information about new client {i+1}", False):
-            percentile = stats.percentileofscore((Stroke_data_distribution["Di"]), new_customers.iloc[i+1, 18])
+            percentile = stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i+1, 18])
             if percentile > 75:
                 statement = "high"
             elif percentile > 50:
@@ -192,5 +192,3 @@ if uploaded_data is not None:
                 st.write("An error has occurred")
             st.write(f"With a value of {new_customers.iloc[i, 18]} client {i+1} ranks in the {percentile}. percentile!"
                      f"That means customer {i+1} is in a {statement} risk segment")
-
-           
