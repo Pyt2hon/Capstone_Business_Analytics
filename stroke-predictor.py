@@ -203,12 +203,7 @@ if Stroke_probability >= 0.08:
 else:
     Stroke_statement = "Not at risk!"
 
-st.markdown(""" <style> .font {
-    font-size:1000px;} 
-    </style> """, unsafe_allow_html=True)
-st.markdown(f'<p class="big-font">The prediction for the entered data is: {Stroke_statement}!!</p>', unsafe_allow_html=True)
-
-st.write(f'The prediction for the entered data is: {Stroke_statement}')
+st.subheader(f'The prediction for the entered data is: {Stroke_statement}')
 
 if st.checkbox(f"Show more information about client", False):
     percentile = round(stats.percentileofscore(Stroke_data_distribution["Di"], Stroke_probability), 1)
