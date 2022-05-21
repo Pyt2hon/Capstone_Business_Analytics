@@ -203,6 +203,11 @@ if Stroke_probability >= 0.08:
 else:
     Stroke_statement = "Not at risk!"
 
+st.markdown(""" <style> .font {
+    font-size:50px;} 
+    </style> """, unsafe_allow_html=True)
+st.markdown(f'<p class="big-font">The prediction for the entered data is: {Stroke_statement}!!</p>', unsafe_allow_html=True)
+
 st.write(f'The prediction for the entered data is: {Stroke_statement}')
 
 if st.checkbox(f"Show more information about client", False):
@@ -266,3 +271,4 @@ if uploaded_data is not None:
                 st.write("An error has occurred")
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
+
