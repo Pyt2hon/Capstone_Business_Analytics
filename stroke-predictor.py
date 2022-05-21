@@ -34,7 +34,6 @@ def load_data2():
 
 # Save it in the variable Stroke_data_distribution
 Stroke_data_distribution = load_data2()
-Stroke_data_distribution = Stroke_data_distribution.drop('Unnamed: 0', axis = 1)
 
 Stroke_X = Stroke_data.drop("stroke", axis = 1)
 
