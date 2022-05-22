@@ -20,7 +20,8 @@ def load_data():
 Stroke_data = load_data()
 
 # Drop the column stroke
-Stroke_X = Stroke_data.drop("stroke", axis = 1)
+Stroke_X = Stroke_data.drop("stroke", axis=1)
+
 
 # Implement function that loads in the healthcare dataset
 @st.cache()
@@ -127,8 +128,8 @@ BMI = row5_col1.slider("Enter BMI:",
 row5_col1.write(BMI)  # Show the user the entered input
 
 # Display a radio widget for the user to enter the smoking status
-Smoking_status = row5_col2.radio("Enter your smoking status:",
-                                  options=['Never smoked', 'Formerly smoked', 'Smokes', 'Unknown'])
+Smoking_status = row5_col2.radio("Enter your smoking status:", 
+                                 options=['Never smoked', 'Formerly smoked', 'Smokes', 'Unknown'])
 row5_col2.write(Smoking_status)  # Show the user the entered input
 
 # Implement all the parameters from the model for the customizable prediction
@@ -327,13 +328,13 @@ if uploaded_data is not None:
 
     # Give the option to Download the scored customer data
     st.download_button(label="Download scored customer data",
-                   data=new_customers.to_csv(index=False).encode("utf-8"),
-                   file_name="scored_customer_data.csv")
+                       data=new_customers.to_csv(index=False).encode("utf-8"),
+                       file_name="scored_customer_data.csv")
 
     # Create a for loop to return a statement considering their stroke value and the distribution of the stroke dataset
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
-            percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
+            percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]), 1)
 
             if percentile2 > 90:  # Set the percentile threshold for high risk patients at 90
                 statement2 = "high"
@@ -353,4 +354,3 @@ if uploaded_data is not None:
             # Print a summarizing text
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
-            
