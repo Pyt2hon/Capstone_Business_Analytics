@@ -260,18 +260,18 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     # Create an arrow visualizing that the customer's stroke risk is between -0.07 and -0.06
     elif (Stroke_probability < -0.06) and (Stroke_probability > -0.07):
         colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
-        t = linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
-        x1 = 0.02 * cos(radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
-        y1 = 10 * sin(radians(t))  # Set y-radius to 10 and set center to 0 (default)
-        plot(x1, y1, color='red')  # Plot the ellipse
+        t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
+        x1 = 0.02 * numpy.cos(numpy.radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
+        y1 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
+        plt.plot(x1, y1, color='red')  # Plot the ellipse
 
     # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
     elif (Stroke_probability < 0.3) and (Stroke_probability > 0.25):
         colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
-        t = linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
-        x2 = 0.03 * cos(radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
-        y2 = 10 * sin(radians(t))  # Set y-radius to 10 and set center to 0 (default)
-        plot(x2, y2, color='red')  # Plot the ellipse
+        t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
+        x2 = 0.03 * numpy.cos(numpy.radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
+        y2 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
+        plt.plot(x2, y2, color='red')  # Plot the ellipse
 
     # Create an arrow visualizing that the customer's stroke risk is below -0.08
     elif Stroke_probability < -0.08:
