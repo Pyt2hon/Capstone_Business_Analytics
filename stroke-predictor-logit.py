@@ -334,7 +334,8 @@ if uploaded_data is not None:
     # Create a for loop to return a statement considering their stroke value and the distribution of the stroke dataset
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
-            percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], numpy.exp(new_customers.iloc[i, 18]), 1))
+            percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"],
+                                                        numpy.exp(new_customers.iloc[i, 18])), 1)
 
             if percentile2 > 90:  # Set the percentile threshold for high risk patients at 90
                 statement2 = "high"
