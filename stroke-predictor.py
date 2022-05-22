@@ -184,26 +184,26 @@ if Residence_type == "Rural":
     v11 = 0
 
 # For the variable "Glucose_level"
-v11 = Glucose_level*0.0002
+v12 = Glucose_level*0.0002
 
 # For the variable "BMI"
-v12 = BMI*-0.0007
+v13 = BMI*-0.0007
 
 # For the variable "Smoking_status"
 if Smoking_status == 'Never smoked':
-    v13, v14, v15, v16 = -0.0105, 0, 0, 0
+    v14, v15, v16, v17 = -0.0105, 0, 0, 0
 
 if Smoking_status == "Formerly smoked":
-    v13, v14, v15, v16 = 0.0, -0.0029, 0, 0
+    v14, v15, v16, v17 = 0.0, -0.0029, 0, 0
 
 if Smoking_status == "Smokes":
-    v13, v14, v15, v16 = 0, 0, 0, -0.0060
+    v14, v15, v16, v17 = 0, 0, 0, -0.0060
 
 if Smoking_status == "Unknown":
-    v13, v14, v15, v16 = 0, 0, 0, 0
+    v14, v15, v16, v17 = 0, 0, 0, 0
 
 # Calculate the Stroke probability by adding the values and the constant of the OLS model
-Stroke_probability = -0.0931 + v1 + v2 + v3 + v4 + v5 + v6 + v7 + v8 + v9 + v10 + v11 + v12 + v13 + v14 + v15 + v16
+Stroke_probability = -0.0931+v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+v15+v16+v17
 
 # Set a threshold and create a statement
 if Stroke_probability >= 0.08:
@@ -371,7 +371,7 @@ if uploaded_data is not None:
             elif (new_customers.iloc[i, 18] < -0.06) and (new_customers.iloc[i, 18] > -0.07):
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
                     (
-                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Blue for all bins except the one containing the customer (red)
+                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
                 t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
                 x1 = 0.02 * numpy.cos(numpy.radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
                 y1 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
@@ -380,8 +380,7 @@ if uploaded_data is not None:
             # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
             elif (new_customers.iloc[i, 18] < 0.3) and (new_customers.iloc[i, 18] > 0.25):
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
-                    (
-                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Blue for all bins except the one containing the customer (red)
+                    (37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
                 t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
                 x2 = 0.03 * numpy.cos(numpy.radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
                 y2 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
@@ -397,8 +396,7 @@ if uploaded_data is not None:
             # Set colors flexible to which bin is red (depending of the stroke value "Stroke_probability")
             else:
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
-                    (
-                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Blue for all bins except the one containing the customer (red)
+                    (37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
 
             # Plot the distribution with 38 bins
             n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=38)
