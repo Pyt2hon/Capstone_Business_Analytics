@@ -294,7 +294,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     plt.xlabel('Stroke value', fontsize=20)
 
     # Plot ylabel with fitting fontsize
-    plt.ylabel('Amount of individuals', fontsize=20)
+    plt.ylabel('Number of individuals', fontsize=20)
 
     # Plot a text helping the user with fitting fontsize
     plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
@@ -370,8 +370,7 @@ if uploaded_data is not None:
             # Create an arrow visualizing that the customer's stroke risk is between -0.07 and -0.06
             elif (new_customers.iloc[i, 18] < -0.06) and (new_customers.iloc[i, 18] > -0.07):
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
-                    (
-                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
+                    (37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
                 t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
                 x1 = 0.02 * numpy.cos(numpy.radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
                 y1 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
@@ -412,7 +411,7 @@ if uploaded_data is not None:
             plt.xlabel('Stroke value', fontsize=20)
 
             # Plot ylabel with fitting fontsize
-            plt.ylabel('Amount of individuals', fontsize=20)
+            plt.ylabel('Number of individuals', fontsize=20)
 
             # Plot a text helping the user with fitting fontsize
             plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
