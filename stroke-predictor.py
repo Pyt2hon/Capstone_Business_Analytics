@@ -1,12 +1,11 @@
 
 # Import all necessary libraries
-import numpy
 import pandas as pd
 import streamlit as st
 import pickle
 import statsmodels.api as sm
 from scipy import stats
-import numpy as np
+import numpy
 import matplotlib.pyplot as plt
 
 
@@ -354,3 +353,4 @@ if uploaded_data is not None:
             # Print a summarizing text
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
+            
