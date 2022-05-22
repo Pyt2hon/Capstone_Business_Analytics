@@ -6,7 +6,7 @@ import pickle
 import statsmodels.api as sm
 from scipy import stats
 import numpy as np
-import matplotlib.pyplor as plt
+import matplotlib.pyplot as plt
 
 #data2 = pd.read_csv("healthcare-dataset-stroke-data.csv")
 #chart = data2["bmi"].dropna()
