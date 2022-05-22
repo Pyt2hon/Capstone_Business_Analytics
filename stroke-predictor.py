@@ -356,7 +356,7 @@ if uploaded_data is not None:
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
 
     for i in range(0, (new_customers.shape[0])):
-        if st.checkbox(f"Show even more information about new client {i}", False):
+        if st.checkbox(f"Show a plot regarding new customer {i}'s position in the risk distribution", False):
             # Instantiate a plot using matplotlib.pyplot with an appropriate size
             fig2, ax = plt.subplots(figsize=(20, 10))
 
