@@ -4,4 +4,4 @@ numpy==1.20.3
 pickle5
 statsmodels
 scipy
-matplotlib.pyplot
+matplotlib.pyplot==3.1.2
