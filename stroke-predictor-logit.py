@@ -353,7 +353,7 @@ if uploaded_data is not None:
                 st.write("An error has occurred")
 
             # Print a summarizing text
-            st.write(f"With a value of {new_customers.iloc[i, 18]} client {i} ranks in the {percentile2}."
+            st.write(f"With a value of {round(new_customers.iloc[i, 18]), 2} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
 
     for i in range(0, (new_customers.shape[0])):
