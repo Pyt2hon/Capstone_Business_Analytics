@@ -362,14 +362,14 @@ if uploaded_data is not None:
             fig2, ax = plt.subplots(figsize=(20, 10))
 
             # Create an arrow visualizing that the customer's stroke risk is above 0.3
-            if numpy.exp(new_customers.iloc[i, 18]) > 0.3:
+            if new_customers.iloc[i, 18] > 0.3:
                 colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
                 plt.arrow(0.25, 30, 0.08, 0, head_width=10, head_length=0.015, fc='r',
                           ec='r', )  # Set fitting attributes
                 plt.text(0.26, 35, r"Customer's value is above: 0.3")  # Text to help understand the arrow
 
             # Create an arrow visualizing that the customer's stroke risk is between -0.07 and -0.06
-            elif (numpy.exp(new_customers.iloc[i, 18]) < -0.06) and (numpy.exp(new_customers.iloc[i, 18]) > -0.07):
+            elif (new_customers.iloc[i, 18] < -0.06) and (new_customers.iloc[i, 18] > -0.07):
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
                     (37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
                 t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
@@ -378,16 +378,16 @@ if uploaded_data is not None:
                 plt.plot(x1, y1, color='red')  # Plot the ellipse
 
             # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
-            elif (numpy.exp(new_customers.iloc[i, 18]) < 0.3) and (numpy.exp(new_customers.iloc[i, 18]) > 0.25):
-                colors = ["#4169E1"] * int(100 * numpy.exp(new_customers.iloc[i, 18]) + 8) + ['#FF0000'] + ["#4169E1"] * int(
-                    (37 - 100 * numpy.exp(new_customers.iloc[i, 18]) + 8))  # Set blue and red bins
+            elif (new_customers.iloc[i, 18] < 0.3) and (new_customers.iloc[i, 18] > 0.25):
+                colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
+                    (37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
                 t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
                 x2 = 0.03 * numpy.cos(numpy.radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
                 y2 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
                 plt.plot(x2, y2, color='red')  # Plot the ellipse
 
             # Create an arrow visualizing that the customer's stroke risk is below -0.08
-            elif numpy.exp(new_customers.iloc[i, 18]) < -0.08:
+            elif new_customers.iloc[i, 18] < -0.08:
                 colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
                 plt.arrow(-0.06, 30, -0.07, 0, head_width=10, head_length=0.01, fc='r',
                           ec='r')  # Set fitting attributes
@@ -395,8 +395,8 @@ if uploaded_data is not None:
 
             # Set colors flexible to which bin is red (depending of the stroke value "Stroke_probability")
             else:
-                colors = ["#4169E1"] * int(100 * numpy.exp(new_customers.iloc[i, 18]) + 8) + ['#FF0000'] + ["#4169E1"] * int(
-                    (37 - 100 * numpy.exp(new_customers.iloc[i, 18]) + 8))  # Set blue and red bins
+                colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
+                    (37 - 100 * new_customers.iloc[i, 18] + 8))  # Set blue and red bins
 
             # Plot the distribution with 38 bins
             n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=38)
