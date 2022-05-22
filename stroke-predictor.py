@@ -262,7 +262,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
         colors = ["#4169E1"] * int(100 * Stroke_probability + 8) + ['#FF0000'] + ["#4169E1"] * int(
             (37 - 100 * Stroke_probability + 8))
 
-    n, bins, patches = plt.hist(A["Di"], bins=38)
+    n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=38)
 
     plt.title('Distribution of stroke values', fontdict={'fontsize': 'x-large'})
     plt.xlabel('Stroke value', fontdict={'fontsize': 'large'})
