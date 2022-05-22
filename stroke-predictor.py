@@ -267,7 +267,8 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     plt.title('Distribution of stroke values', fontdict={'fontsize': 'x-large'})
     plt.xlabel('Stroke value', fontdict={'fontsize': 'large'})
     plt.ylabel('Amount of individuals', fontdict={'fontsize': 'large'})
-
+    plt.text(0.1, 350, r"Customer's risk increases in this direction", fontdict={'fontsize': 'x-large'})
+    plt.text(0.1, 320, r"-------------------------------------------------------->", fontdict={'fontsize': 'x-large'})
     # adapt the color of each patch
     for color, patch in zip(colors, patches):
         patch.set_facecolor(color)
