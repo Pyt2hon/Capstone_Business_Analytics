@@ -293,15 +293,20 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     for color, patch in zip(colors, patches):
         patch.set_facecolor(color)
 
-    # Plot title
+    # Plot title with fitting fontsize
     plt.title('Distribution of stroke values', fontsize=25)
 
-    # Plot title
+    # Plot xlabel with fitting fontsize
     plt.xlabel('Stroke value', fontsize=20)
+
+    # Plot ylabel with fitting fontsize
     plt.ylabel('Amount of individuals', fontsize=20)
+
+    # Plot a text helping the user with fitting fontsize
     plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
     plt.text(0.1, 320, r"-------------------------------------------------------->", fontsize=20)
-
+    
+    # Plot the figure
     st.pyplot(fig)
 
 
