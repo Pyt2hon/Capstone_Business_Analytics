@@ -240,7 +240,7 @@ if st.checkbox(f"Show more information about client", False):
              f"percentile. That means customer is in a {statement} risk segment!")
 
 # Add a checkbox that returns a plot considering their stroke value and the distribution of the stroke dataset
-if st.checkbox(f"Hide a plot regarding their position in the risk distribution", True):
+if st.checkbox(f"Show a plot regarding their position in the risk distribution", True):
 
     # Instantiate a plot using matplotlib.pyplot with an appropriate size
     fig, ax = plt.subplots(figsize=(20, 10))
@@ -354,3 +354,71 @@ if uploaded_data is not None:
             # Print a summarizing text
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
+
+    for i in range(0, (new_customers.shape[0])):
+        if st.checkbox(f"Show even more information about new client {i}", False):
+            # Instantiate a plot using matplotlib.pyplot with an appropriate size
+            fig2, ax = plt.subplots(figsize=(20, 10))
+
+            # Create an arrow visualizing that the customer's stroke risk is above 0.3
+            if new_customers.iloc[i, 18] > 0.3:
+                colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
+                plt.arrow(0.25, 30, 0.08, 0, head_width=10, head_length=0.015, fc='r',
+                          ec='r', )  # Set fitting attributes
+                plt.text(0.26, 35, r"Customer's value is above: 0.3")  # Text to help understand the arrow
+
+            # Create an arrow visualizing that the customer's stroke risk is between -0.07 and -0.06
+            elif (new_customers.iloc[i, 18] < -0.06) and (new_customers.iloc[i, 18] > -0.07):
+                colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
+                    (
+                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Blue for all bins except the one containing the customer (red)
+                t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
+                x1 = 0.02 * numpy.cos(numpy.radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
+                y1 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
+                plt.plot(x1, y1, color='red')  # Plot the ellipse
+
+            # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
+            elif (new_customers.iloc[i, 18] < 0.3) and (new_customers.iloc[i, 18] > 0.25):
+                colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
+                    (
+                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Blue for all bins except the one containing the customer (red)
+                t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
+                x2 = 0.03 * numpy.cos(numpy.radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
+                y2 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
+                plt.plot(x2, y2, color='red')  # Plot the ellipse
+
+            # Create an arrow visualizing that the customer's stroke risk is below -0.08
+            elif new_customers.iloc[i, 18] < -0.08:
+                colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
+                plt.arrow(-0.06, 30, -0.07, 0, head_width=10, head_length=0.01, fc='r',
+                          ec='r')  # Set fitting attributes
+                plt.text(-0.128, 35, r"Customer's value is below: -0.08")  # Text to help understand the arrow
+
+            # Set colors flexible to which bin is red (depending of the stroke value "Stroke_probability")
+            else:
+                colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18] + 8) + ['#FF0000'] + ["#4169E1"] * int(
+                    (
+                                37 - 100 * new_customers.iloc[i, 18] + 8))  # Blue for all bins except the one containing the customer (red)
+
+            # Plot the distribution with 38 bins
+            n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=38)
+
+            # Adapt the color of each patch
+            for color, patch in zip(colors, patches):
+                patch.set_facecolor(color)
+
+            # Plot title with fitting fontsize
+            plt.title('Distribution of stroke values', fontsize=25)
+
+            # Plot xlabel with fitting fontsize
+            plt.xlabel('Stroke value', fontsize=20)
+
+            # Plot ylabel with fitting fontsize
+            plt.ylabel('Amount of individuals', fontsize=20)
+
+            # Plot a text helping the user with fitting fontsize
+            plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
+            plt.text(0.1, 320, r"-------------------------------------------------------->", fontsize=20)
+
+            # Plot the figure
+            st.pyplot(fig2)
