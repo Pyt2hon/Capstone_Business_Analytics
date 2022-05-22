@@ -240,7 +240,7 @@ if st.checkbox(f"Show more information about client", False):
              f"percentile. That means customer is in a {statement} risk segment!")
 
 # Add a checkbox that returns a plot considering their stroke value and the distribution of the stroke dataset
-if st.checkbox(f"Show a plot regarding their position in the risk distribution", False):
+if st.checkbox(f"Hide a plot regarding their position in the risk distribution", True):
 
     # Instantiate a plot using matplotlib.pyplot with an appropriate size
     fig, ax = plt.subplots(figsize=(20, 10))
