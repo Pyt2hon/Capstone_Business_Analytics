@@ -355,6 +355,9 @@ if uploaded_data is not None:
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
 
+
+@st.cache()        
+def plot_function():
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show even more information about new client {i}", False):
             # Instantiate a plot using matplotlib.pyplot with an appropriate size
@@ -418,4 +421,7 @@ if uploaded_data is not None:
             plt.text(0.1, 320, r"-------------------------------------------------------->", fontsize=20)
 
             # Plot the figure
-            st.pyplot(fig2)
+            return fig2
+
+    plot_d = plot_function()
+    st.pyplot(plot_d)
