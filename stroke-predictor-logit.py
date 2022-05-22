@@ -203,7 +203,7 @@ if Smoking_status == "Unknown":
     v14, v15, v16, v17 = 0, 0, 0, 0
 
 # Calculate the Stroke probability by adding the values and the constant of the OLS model
-Stroke_probability = -7.848497+v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+v15+v16+v17
+Stroke_probability = numpy.exp(-7.848497+v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+v15+v16+v17)
 
 # Set a threshold and create a statement
 if Stroke_probability >= 0.08:
