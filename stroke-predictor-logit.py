@@ -335,7 +335,7 @@ if uploaded_data is not None:
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
             percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"],
-                                                        numpy.exp(new_customers.iloc[i, 18])), 1)
+                                                        new_customers.iloc[i, 18]), 1)
 
             if percentile2 > 90:  # Set the percentile threshold for high risk patients at 90
                 statement2 = "high"
@@ -353,7 +353,7 @@ if uploaded_data is not None:
                 st.write("An error has occurred")
 
             # Print a summarizing text
-            st.write(f"With a value of {round(numpy.exp(new_customers.iloc[i, 18]),2)} client {i} ranks in the {percentile2}."
+            st.write(f"With a value of {round(new_customers.iloc[i, 18]),2} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
 
     for i in range(0, (new_customers.shape[0])):
