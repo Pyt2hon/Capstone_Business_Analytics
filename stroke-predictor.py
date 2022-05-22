@@ -281,7 +281,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     plt.xlabel('Stroke value', fontsize=20)
     plt.ylabel('Amount of individuals', fontsize=20)
     plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
-    plt.text(0.1, 320, r"------------------------------------------------------------------------------>", fontsize=20)
+    plt.text(0.1, 320, r"----------------------------------------------------------->", fontsize=20)
 
     st.pyplot(fig)
 
