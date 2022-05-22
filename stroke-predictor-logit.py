@@ -152,75 +152,75 @@ row5_col2.write(Smoking_status)  # Show the user the entered input
 #smoking_status_never smoked       -0.222415
 #smoking_status_smokes              0.058823
 if Gender == "Male":
-    v1, v2, v3 = -0.0019, 0, 0
+    v1, v2, v3 = -0.000524, 0, 0
 
 if Gender == "Female":
     v1, v2, v3 = 0, 0, 0
 
 if Gender == "Other":
-    v1, v2, v3 = -0, 0, -0.0225
+    v1, v2, v3 = -0, 0, -13.920840
 
 # For the variable "Age"
-v4 = Age*0.0035
+v4 = Age*0.078705
 
 # For the variable "Hypertension"
 if Hypertension == "Yes":
-    v5 = 0.0385
+    v5 = 0.387840
 
 if Hypertension == "No":
     v5 = 0
 
 # For the variable "Heart_disease"
 if Heart_disease == "Yes":
-    v6 = 0.0482
+    v6 = 0.252135
 
 if Heart_disease == "No":
     v6 = 0
 
 # For the variable "Work_type"
 if Work_type == "Never worked":
-    v7, v8, v9, v10 = 0.0339, 0, 0, 0
+    v7, v8, v9, v10 = -18.093735, 0, 0, 0
 
 if Work_type == "Private Sector":
-    v7, v8, v9, v10 = 0, 0.0124, 0, 0
+    v7, v8, v9, v10 = 0, 0.090310, 0, 0
 
 if Work_type == "Self-employed":
-    v7, v8, v9, v10 = 0, 0, -0.0173, 0
+    v7, v8, v9, v10 = 0, 0, -0.414101, 0
 
 if Work_type == "Child/ Student":
-    v7, v8, v9, v10 = 0, 0, 0, 0.0641
+    v7, v8, v9, v10 = 0, 0, 0, 1.290508
 
 if Work_type == "Government Job":
     v7, v8, v9, v10 = 0, 0, 0, 0
 
 # For the variable "Residence_type"
 if Residence_type == "Urban":
-    v11 = 0.0101
+    v11 = 0.210436
 
 if Residence_type == "Rural":
     v11 = 0
 
 # For the variable "Glucose_level"
-v12 = Glucose_level*0.0002
+v12 = Glucose_level*0.002964
 
 # For the variable "BMI"
-v13 = BMI*-0.0007
+v13 = BMI*0.004590
 
 # For the variable "Smoking_status"
 if Smoking_status == 'Never smoked':
-    v14, v15, v16, v17 = -0.0105, 0, 0, 0
+    v14, v15, v16, v17 = -0.222415, 0, 0, 0
 
 if Smoking_status == "Formerly smoked":
-    v14, v15, v16, v17 = 0.0, -0.0029, 0, 0
+    v14, v15, v16, v17 = 0.0, 0.018451, 0, 0
 
 if Smoking_status == "Smokes":
-    v14, v15, v16, v17 = 0, 0, 0, -0.0060
+    v14, v15, v16, v17 = 0, 0, 0, 0.058823
 
 if Smoking_status == "Unknown":
     v14, v15, v16, v17 = 0, 0, 0, 0
 
 # Calculate the Stroke probability by adding the values and the constant of the OLS model
-Stroke_probability = -0.0931+v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+v15+v16+v17
+Stroke_probability = -7.848497+v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+v15+v16+v17
 
 # Set a threshold and create a statement
 if Stroke_probability >= 0.08:
