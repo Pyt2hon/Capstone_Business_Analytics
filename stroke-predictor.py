@@ -9,12 +9,6 @@ from scipy import stats
 import numpy as np
 import matplotlib.pyplot as plt
 
-#data2 = pd.read_csv("healthcare-dataset-stroke-data.csv")
-#chart = data2["bmi"].dropna()
-#chart.hist(bins = 10)
-#st.set_option('deprecation.showPyplotGlobalUse', False)
-#st.pyplot(bins = 10)
-
 
 # Implement function that loads in the healthcare dataset
 @st.cache()
@@ -305,7 +299,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     # Plot a text helping the user with fitting fontsize
     plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
     plt.text(0.1, 320, r"-------------------------------------------------------->", fontsize=20)
-    
+
     # Plot the figure
     st.pyplot(fig)
 
