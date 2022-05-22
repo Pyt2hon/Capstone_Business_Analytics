@@ -245,43 +245,36 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     # Instantiate a plot using matplotlib.pyplot with an appropriate size
     fig, ax = plt.subplots(figsize=(20, 10))
 
-    # Create an arrow visualizing that the customer's stroke risk is above 0.3
-    if Stroke_probability > 0.3:
-        colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
-        plt.arrow(0.25, 30, 0.08, 0, head_width=10, head_length=0.015, fc='r', ec='r', )  # Set fitting attributes
-        plt.text(0.26, 35, r"Customer's value is above: 0.3")  # Text to help understand the arrow
+    # Create an arrow visualizing that the customer's stroke risk is above 0.5
+    if Stroke_probability > 0.5:
+        colors = ["#4169E1"] * 55  # Set the color of the distribution to blue
+        plt.arrow(0.4, 150, 0.1, 0, head_width=50, head_length=0.015, fc='r',
+                  ec='r', )  # Set fitting attributes
+        plt.text(0.41, 210, r"Customer's risk value is above 0.5")  # Text to help understand the arrow
 
-    # Create an arrow visualizing that the customer's stroke risk is between -0.07 and -0.06
-    elif (Stroke_probability < -0.06) and (Stroke_probability > -0.07):
-        colors = ["#4169E1"] * int(100 * Stroke_probability + 8) + ['#FF0000'] + ["#4169E1"] * int(
-            (37 - 100 * Stroke_probability + 8))  # Blue for all bins except the one containing the customer (red)
+    # Create an arrow visualizing that the customer's stroke risk is between 0.3 and 0.5
+    elif (Stroke_probability < 0.5) and (Stroke_probability > 0.3):
+        colors = ["#4169E1"] * int(100 * Stroke_probability) + ['#FF0000'] + ["#4169E1"] * int(
+            (55 - 100 * Stroke_probability)  # Set blue and red bins
         t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
-        x1 = 0.02 * numpy.cos(numpy.radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
-        y1 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
+        x1 = 0.1 * numpy.cos(numpy.radians(t)) + 0.4  # Set x-radius to 0.1 and set center to +0.4
+        y1 = 100 * numpy.sin(numpy.radians(t))  # Set y-radius to 100 and set center to 0 (default)
         plt.plot(x1, y1, color='red')  # Plot the ellipse
 
-    # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
-    elif (Stroke_probability < 0.3) and (Stroke_probability > 0.25):
-        colors = ["#4169E1"] * int(100 * Stroke_probability + 8) + ['#FF0000'] + ["#4169E1"] * int(
-            (37 - 100 * Stroke_probability + 8))  # Blue for all bins except the one containing the customer (red)
-        t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
-        x2 = 0.03 * numpy.cos(numpy.radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
-        y2 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
-        plt.plot(x2, y2, color='red')  # Plot the ellipse
-
-    # Create an arrow visualizing that the customer's stroke risk is below -0.08
-    elif Stroke_probability < -0.08:
-        colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
-        plt.arrow(-0.06, 30, -0.07, 0, head_width=10, head_length=0.01, fc='r', ec='r')  # Set fitting attributes
-        plt.text(-0.128, 35, r"Customer's value is below: -0.08")    # Text to help understand the arrow
+    # Create an arrow visualizing that the customer's stroke risk is below 0
+    elif Stroke_probability < 0:
+        colors = ["#4169E1"] * 55  # Set the color of the distribution to blue
+        plt.arrow(0, 150, -0.1, 0, head_width=50, head_length=0.01, fc='r',
+                  ec='r')  # Set fitting attributes
+        plt.text(-0.105, 210, r"Customer's risk value is below 0")  # Text to help understand the arrow
 
     # Set colors flexible to which bin is red (depending of the stroke value "Stroke_probability")
     else:
-        colors = ["#4169E1"] * int(100 * Stroke_probability + 8) + ['#FF0000'] + ["#4169E1"] * int(
-            (37 - 100 * Stroke_probability + 8))  # Blue for all bins except the one containing the customer (red)
+        colors = ["#4169E1"] * int(100 * Stroke_probability) + ['#FF0000'] + ["#4169E1"] * int(
+            (55 - 100 * Stroke_probability))  # Set blue and red bins
 
-    # Plot the distribution with 38 bins
-    n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=38)
+    # Plot the distribution with 55 bins
+    n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=55)
 
     # Adapt the color of each patch
     for color, patch in zip(colors, patches):
@@ -297,11 +290,15 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     plt.ylabel('Number of individuals', fontsize=20)
 
     # Plot a text helping the user with fitting fontsize
-    plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
-    plt.text(0.1, 320, r"-------------------------------------------------------->", fontsize=20)
+    plt.text(0.15, 1300, r"Customer's risk increases in this direction", fontsize=20)
+    plt.text(0.15, 1200, r"-------------------------------------------------------->", fontsize=20)
 
     # Plot the figure
     st.pyplot(fig)
+
+
+
+        
 
 
 # Give the option to upload data
@@ -361,24 +358,23 @@ if uploaded_data is not None:
             # Instantiate a plot using matplotlib.pyplot with an appropriate size
             fig2, ax = plt.subplots(figsize=(20, 10))
 
-            # Create an arrow visualizing that the customer's stroke risk is above 0.3
+            # Create an arrow visualizing that the customer's stroke risk is above 0.5
             if new_customers.iloc[i, 18] > 0.5:
                 colors = ["#4169E1"] * 55  # Set the color of the distribution to blue
                 plt.arrow(0.4, 150, 0.1, 0, head_width=50, head_length=0.015, fc='r',
                           ec='r', )  # Set fitting attributes
                 plt.text(0.41, 210, r"Customer's risk value is above 0.5")  # Text to help understand the arrow
 
-            # Create an arrow visualizing that the customer's stroke risk is between -0.07 and -0.06
+            # Create an arrow visualizing that the customer's stroke risk is between 0.3 and 0.5
             elif (new_customers.iloc[i, 18] < 0.5) and (new_customers.iloc[i, 18] > 0.3):
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18]) + ['#FF0000'] + ["#4169E1"] * int(
                     (55 - 100 * new_customers.iloc[i, 18]))  # Set blue and red bins
                 t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
-                x1 = 0.1 * numpy.cos(numpy.radians(t)) + 0.4  # Set x-radius to 0.02 and set center to -0.08
-                y1 = 100 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
+                x1 = 0.1 * numpy.cos(numpy.radians(t)) + 0.4  # Set x-radius to 0.1 and set center to +0.4
+                y1 = 100 * numpy.sin(numpy.radians(t))  # Set y-radius to 100 and set center to 0 (default)
                 plt.plot(x1, y1, color='red')  # Plot the ellipse
 
-            # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
-
+            # Create an arrow visualizing that the customer's stroke risk is below 0
             elif new_customers.iloc[i, 18] < 0:
                 colors = ["#4169E1"] * 55  # Set the color of the distribution to blue
                 plt.arrow(0, 150, -0.1, 0, head_width=50, head_length=0.01, fc='r',
@@ -390,7 +386,7 @@ if uploaded_data is not None:
                 colors = ["#4169E1"] * int(100 * new_customers.iloc[i, 18]) + ['#FF0000'] + ["#4169E1"] * int(
                     (55 - 100 * new_customers.iloc[i, 18]))  # Set blue and red bins
 
-            # Plot the distribution with 38 bins
+            # Plot the distribution with 55 bins
             n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=55)
 
             # Adapt the color of each patch
@@ -407,8 +403,8 @@ if uploaded_data is not None:
             plt.ylabel('Number of individuals', fontsize=20)
 
             # Plot a text helping the user with fitting fontsize
-            plt.text(0.07, 450, r"Customer's risk increases in this direction", fontsize=20)
-            plt.text(0.07, 320, r"-------------------------------------------------------->", fontsize=20)
+            plt.text(0.15, 1300, r"Customer's risk increases in this direction", fontsize=20)
+            plt.text(0.15, 1200, r"-------------------------------------------------------->", fontsize=20)
 
             # Plot the figure
             st.pyplot(fig2)
