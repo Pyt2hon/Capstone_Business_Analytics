@@ -26,7 +26,7 @@ Stroke_X = Stroke_data.drop("stroke", axis=1)
 # Implement function that loads in the healthcare dataset
 @st.cache()
 def load_data2():
-    data2 = pd.read_csv("Y_distribution.csv")
+    data2 = pd.read_csv("Y_distribution_logit.csv")
     return data2.dropna()
 
 
@@ -134,23 +134,6 @@ row5_col2.write(Smoking_status)  # Show the user the entered input
 
 # Implement all the parameters from the model for the customizable prediction
 # For the variable "Gender"
-# const                             -7.848497
-#age                                0.078705
-#hypertension                       0.387840
-#heart_disease                      0.252135
-#avg_glucose_level                  0.002964
-#bmi                                0.004590
-#gender_Male                       -0.000524
-#gender_Other                     -13.920840
-#ever_married_Yes                  -0.212374
-#work_type_Never_worked           -18.093735
-#work_type_Private                  0.090310
-#work_type_Self-employed           -0.414101
-#work_type_children                 1.290508
-#Residence_type_Urban               0.210436
-#smoking_status_formerly smoked     0.018451
-#smoking_status_never smoked       -0.222415
-#smoking_status_smokes              0.058823
 if Gender == "Male":
     v1, v2, v3 = -0.000524, 0, 0
 
