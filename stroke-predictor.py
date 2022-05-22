@@ -246,39 +246,45 @@ if st.checkbox(f"Show more information about client", False):
 
 # Add a checkbox that returns a plot considering their stroke value and the distribution of the stroke dataset
 if st.checkbox(f"Show a plot regarding their position in the risk distribution", False):
+
+    # Instantiate a plot using matplotlib.pyplot with an appropriate size
     fig, ax = plt.subplots(figsize=(20, 10))
 
+    # Create an arrow visualizing that the customer's stroke risk is above 0.3
     if Stroke_probability > 0.3:
-        colors = ["#4169E1"] * 38
-        plt.arrow(0.25, 30, 0.08, 0, head_width=10, head_length=0.015, fc='r', ec='r', )
-        plt.text(0.26, 35, r"Customer's value is above: 0.3")
+        colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
+        plt.arrow(0.25, 30, 0.08, 0, head_width=10, head_length=0.015, fc='r', ec='r', )  # Set fitting attributes
+        plt.text(0.26, 35, r"Customer's value is above: 0.3")  # Text to help understand the arrow
 
+    # Create an arrow visualizing that the customer's stroke risk is below 0.3
     elif Stroke_probability < -0.08:
-        colors = ["#4169E1"] * 38
-        plt.arrow(-0.06, 30, -0.07, 0, head_width=10, head_length=0.01, fc='r', ec='r')
-        plt.text(-0.128, 35, r"Customer's value is below: -0.08")
+        colors = ["#4169E1"] * 38  # Set the color of the distribution to blue
+        plt.arrow(-0.06, 30, -0.07, 0, head_width=10, head_length=0.01, fc='r', ec='r')  # Set fitting attributes
+        plt.text(-0.128, 35, r"Customer's value is below: -0.08")    # Text to help understand the arrow
 
+    # Set colors flexible to which bin is red (depending of the stroke value "Stroke_probability")
     else:
         colors = ["#4169E1"] * int(100 * Stroke_probability + 8) + ['#FF0000'] + ["#4169E1"] * int(
-            (37 - 100 * Stroke_probability + 8))
+            (37 - 100 * Stroke_probability + 8))  # Blue for all bins except the one containing the customer (red)
 
+    # Plot the distribution with 38 bins
     n, bins, patches = plt.hist(Stroke_data_distribution["Di"], bins=38)
 
-    plt.title('Distribution of stroke values', fontdict={'fontsize': 'x-large'})
-    plt.xlabel('Stroke value', fontdict={'fontsize': 'large'})
-    plt.ylabel('Amount of individuals', fontdict={'fontsize': 'large'})
-    plt.text(0.1, 350, r"Customer's risk increases in this direction", fontdict={'fontsize': 'x-large'})
-    plt.text(0.1, 320, r"-------------------------------------------------------->", fontdict={'fontsize': 'x-large'})
-    # adapt the color of each patch
+    # Adapt the color of each patch
     for color, patch in zip(colors, patches):
         patch.set_facecolor(color)
 
+    # Plot title
+    plt.title('Distribution of stroke values', fontsize=25)
+
+    # Plot title
+    plt.xlabel('Stroke value', fontsize=20)
+    plt.ylabel('Amount of individuals', fontsize=20)
+    plt.text(0.1, 350, r"Customer's risk increases in this direction", fontsize=20)
+    plt.text(0.1, 320, r"------------------------------------------------------------------------------>", fontsize=20)
+
     st.pyplot(fig)
 
-# Add a checkbox
-if st.checkbox("Show filtered data", False):
-    st.subheader("Raw Data")
-    st.write(Stroke_data)
 
 # Give the option to upload data
 uploaded_data = st.file_uploader("Choose a file with Customer Data for predicting Stroke")
