@@ -255,7 +255,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     # Create an arrow visualizing that the customer's stroke risk is between 0.3 and 0.5
     elif (Stroke_probability < 0.5) and (Stroke_probability > 0.3):
         colors = ["#4169E1"] * int(100 * Stroke_probability) + ['#FF0000'] + ["#4169E1"] * int(
-            (55 - 100 * Stroke_probability)  # Set blue and red bins
+            (55 - 100 * Stroke_probability))  # Set blue and red bins
         t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
         x1 = 0.1 * numpy.cos(numpy.radians(t)) + 0.4  # Set x-radius to 0.1 and set center to +0.4
         y1 = 100 * numpy.sin(numpy.radians(t))  # Set y-radius to 100 and set center to 0 (default)
@@ -298,7 +298,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
 
 
 
-        
+
 
 
 # Give the option to upload data
