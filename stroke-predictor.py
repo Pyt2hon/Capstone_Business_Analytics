@@ -128,7 +128,7 @@ BMI = row5_col1.slider("Enter BMI:",
 row5_col1.write(BMI)  # Show the user the entered input
 
 # Display a radio widget for the user to enter the smoking status
-Smoking_status = row5_col2.radio("Enter your smoking status:", 
+Smoking_status = row5_col2.radio("Enter your smoking status:",
                                  options=['Never smoked', 'Formerly smoked', 'Smokes', 'Unknown'])
 row5_col2.write(Smoking_status)  # Show the user the entered input
 
@@ -258,7 +258,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
         t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
         x1 = 0.02 * numpy.cos(numpy.radians(t)) - 0.08  # Set x-radius to 0.02 and set center to -0.08
         y1 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
-        plt.plot(x1, y1, color='red')  # Plot the ellipse
+        #plt.plot(x1, y1, color='red')  # Plot the ellipse
 
     # Create an arrow visualizing that the customer's stroke risk is between 0.25 and 0.3
     elif (Stroke_probability < 0.3) and (Stroke_probability > 0.25):
@@ -267,7 +267,7 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
         t = numpy.linspace(0, 360, 360)  # Make a circle to later distort it to an ellipse
         x2 = 0.03 * numpy.cos(numpy.radians(t)) + 0.28  # Set x-radius to 0.03 and set center to 0.28
         y2 = 10 * numpy.sin(numpy.radians(t))  # Set y-radius to 10 and set center to 0 (default)
-        plt.plot(x2, y2, color='red')  # Plot the ellipse
+        #plt.plot(x2, y2, color='red')  # Plot the ellipse
 
     # Create an arrow visualizing that the customer's stroke risk is below -0.08
     elif Stroke_probability < -0.08:
