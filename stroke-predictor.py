@@ -244,6 +244,36 @@ if st.checkbox(f"Show more information about client", False):
     st.write(f"With a value of {round(Stroke_probability, 2)} client ranks in the {percentile}."
              f"percentile. That means customer is in a {statement} risk segment!")
 
+# Add a checkbox that returns a plot considering their stroke value and the distribution of the stroke dataset
+if st.checkbox(f"Show a plot regarding their position in the risk distribution", False):
+    fig, ax = plt.subplots(figsize=(20, 10))
+
+    if Stroke_probability > 0.3:
+        colors = ["#4169E1"] * 38
+        plt.arrow(0.25, 30, 0.08, 0, head_width=10, head_length=0.015, fc='r', ec='r', )
+        plt.text(0.26, 35, r"Customer's value is above: 0.3")
+
+    elif Stroke_probability < -0.08:
+        colors = ["#4169E1"] * 38
+        plt.arrow(-0.06, 30, -0.07, 0, head_width=10, head_length=0.01, fc='r', ec='r')
+        plt.text(-0.128, 35, r"Customer's value is below: -0.08")
+
+    else:
+        colors = ["#4169E1"] * int(100 * Stroke_probability + 8) + ['#FF0000'] + ["#4169E1"] * int(
+            (37 - 100 * Stroke_probability + 8))
+
+    n, bins, patches = plt.hist(A["Di"], bins=38)
+
+    plt.title('Distribution of stroke values', fontdict={'fontsize': 'x-large'})
+    plt.xlabel('Stroke value', fontdict={'fontsize': 'large'})
+    plt.ylabel('Amount of individuals', fontdict={'fontsize': 'large'})
+
+    # adapt the color of each patch
+    for color, patch in zip(colors, patches):
+        patch.set_facecolor(color)
+
+    st.pyplot(fig)
+
 # Add a checkbox
 if st.checkbox("Show filtered data", False):
     st.subheader("Raw Data")
@@ -254,12 +284,12 @@ uploaded_data = st.file_uploader("Choose a file with Customer Data for predictin
 
 # Create actions if data is uploaded
 if uploaded_data is not None:
-    
+
     # Read in csv, get dummies and add a constant to predict values
     new_customers = pd.read_csv(uploaded_data, on_bad_lines='skip', encoding='ISO-8859-1')
     new_customers = pd.get_dummies(new_customers, drop_first=True)
     new_customers = sm.add_constant(new_customers)
-    
+
     # Predict values and save the in a new column
     new_customers["Stroke_prediction"] = model.predict(new_customers)
     new_customers["Stroke_prediction_exact"] = new_customers["Stroke_prediction"]  # For exact values
@@ -267,7 +297,7 @@ if uploaded_data is not None:
 
     # Print out the newly generated dataset
     st.write(new_customers)
-    
+
     # Print success message
     st.success(f"You successfully scored %i new customers for stroke predictions" % new_customers.shape[0])
 
@@ -275,27 +305,27 @@ if uploaded_data is not None:
     st.download_button(label="Download scored customer data",
                    data=new_customers.to_csv(index=False).encode("utf-8"),
                    file_name="scored_customer_data.csv")
-    
+
     # Create a for loop to return a statement considering their stroke value and the distribution of the stroke dataset
     for i in range(0, (new_customers.shape[0])):
         if st.checkbox(f"Show more information about new client {i}", False):
             percentile2 = round(stats.percentileofscore(Stroke_data_distribution["Di"], new_customers.iloc[i, 18]),1)
-            
+
             if percentile2 > 90:  # Set the percentile threshold for high risk patients at 90
                 statement2 = "high"
-                
+
             elif percentile2 > 70:  # Set the percentile threshold for medium-high risk patients at 70
                 statement2 = "medium-high"
-                
+
             elif percentile2 > 50:  # Set the percentile threshold for medium risk patients at 50
                 statement2 = "medium"
-                
+
             elif percentile2 < 50:  # Set the percentile threshold for low risk patients at below 50
                 statement2 = "low"
-                
+
             else:
                 st.write("An error has occurred")
-                
+
             # Print a summarizing text
             st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
