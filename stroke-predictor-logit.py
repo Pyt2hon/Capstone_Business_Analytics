@@ -37,7 +37,7 @@ Stroke_data_distribution = load_data2()
 # Implement function that loads in the model
 @st.cache(allow_output_mutation=True)
 def load_model():
-    filename = "stroke_logit_model2.sav"
+    filename = "stroke_logit_model2.sav.sav"
     loaded_model = pickle.load(open(filename, "rb"))
     return loaded_model
 
@@ -206,7 +206,7 @@ if Smoking_status == "Unknown":
 Stroke_probability = numpy.exp(-7.848497+v1+v2+v3+v4+v5+v6+v7+v8+v9+v10+v11+v12+v13+v14+v15+v16+v17)
 
 # Set a threshold and create a statement
-if Stroke_probability >= 0.08:
+if Stroke_probability >= 0.05:
     Stroke_statement = "At risk!"
 
 # Create a statement for low-risk-customers
@@ -296,11 +296,6 @@ if st.checkbox(f"Show a plot regarding their position in the risk distribution",
     # Plot the figure
     st.pyplot(fig)
 
-
-
-
-
-
 # Give the option to upload data
 uploaded_data = st.file_uploader("Choose a file with Customer Data for predicting Stroke")
 
@@ -315,7 +310,7 @@ if uploaded_data is not None:
     # Predict values and save the in a new column
     new_customers["Stroke_prediction"] = model.predict(new_customers)
     new_customers["Stroke_prediction_exact"] = new_customers["Stroke_prediction"]  # For exact values
-    new_customers["Stroke_prediction"] = (new_customers["Stroke_prediction"] > 0.08).astype(int)  # With threshold
+    new_customers["Stroke_prediction"] = (new_customers["Stroke_prediction"] > 0.05).astype(int)  # With threshold
 
     # Print out the newly generated dataset
     st.write(new_customers)
@@ -350,7 +345,7 @@ if uploaded_data is not None:
                 st.write("An error has occurred")
 
             # Print a summarizing text
-            st.write(f"With a value of {round(new_customers.iloc[i, 18],2)} client {i} ranks in the {percentile2}."
+            st.write(f"With a value of {round(new_customers.iloc[i, 18], 4)} client {i} ranks in the {percentile2}."
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
 
     for i in range(0, (new_customers.shape[0])):
