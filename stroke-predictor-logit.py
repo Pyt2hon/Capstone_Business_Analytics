@@ -236,7 +236,7 @@ if st.checkbox(f"Show more information about client", False):
         st.write("An error has occurred")
 
     # Print a statement regarding the new information
-    st.write(f"With a value of {round(Stroke_probability, 4)} client ranks in the {percentile}."
+    st.write(f"With a value of {round(Stroke_probability, 4)} client ranks in the {percentile}. "
              f"percentile. That means customer is in a {statement} risk segment!")
 
 # Add a checkbox that returns a plot considering their stroke value and the distribution of the stroke dataset
@@ -345,7 +345,7 @@ if uploaded_data is not None:
                 st.write("An error has occurred")
 
             # Print a summarizing text
-            st.write(f"With a value of {round(new_customers.iloc[i, 18], 4)} client {i} ranks in the {percentile2}."
+            st.write(f"With a value of {round(new_customers.iloc[i, 18], 4)} client {i} ranks in the {percentile2}. "
                      f"percentile. That means customer {i} is in a {statement2} risk segment!")
 
     for i in range(0, (new_customers.shape[0])):
