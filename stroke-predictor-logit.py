@@ -37,7 +37,7 @@ Stroke_data_distribution = load_data2()
 # Implement function that loads in the model
 @st.cache(allow_output_mutation=True)
 def load_model():
-    filename = "stroke_logit_model2.sav.sav"
+    filename = "stroke_logit_model2.sav"
     loaded_model = pickle.load(open(filename, "rb"))
     return loaded_model
 
