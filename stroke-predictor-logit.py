@@ -403,3 +403,5 @@ if uploaded_data is not None:
 
             # Plot the figure
             st.pyplot(fig2)
+
+            
