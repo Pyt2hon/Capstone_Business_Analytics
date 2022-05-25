@@ -6,4 +6,4 @@ IT IS RECOMMENDED TO USE THE LOGIT MODEL, AS THE OLS MODEL IS NOT SUITABLE FOR B
 
 Link for the final model (logit): https://share.streamlit.io/pyt2hon/capstone_business_analytics/main/stroke-predictor-logit.py
 
-Link for the OLS model as comparison and backup: https://share.streamlit.io/pyt2hon/capstone_business_analytics/main/stroke-predictor.py
+Link for the OLS model for its illustrating purposes as mentioned above: https://share.streamlit.io/pyt2hon/capstone_business_analytics/main/stroke-predictor.py
